@@ -1,0 +1,354 @@
+html{
+    font-size: 20px;
+    height: 100%;
+}
+body{
+    font-size: 0.7rem;
+    width: 100%;
+    max-height:100%; 
+    min-height:100%; 
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto{
+    padding: 0;
+}
+#client{
+    background: #007bff;
+}
+.home-container a{
+    color: #fff !important;
+}
+.home-container a:link,.home-container a:hover,.home-container a:visited,a:active{
+    color: #fff !important;
+    text-decoration: none;
+}
+.row{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+.login-footer{
+    position: fixed;
+    bottom: 0;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    width: 100%;
+    padding: 0 50px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+.footer-menu-block{
+    line-height: 50px;
+}
+.home-container{
+    color: #fff !important;
+}
+.carousel{
+    height: 200px;
+    margin: 0 0 10px;
+}
+.carousel img{
+    height: 200px !important;
+}
+.home-menu-block{
+    height: 100px;
+    line-height: 100px;
+    color: #fff !important;
+    font-size: 0.8rem;
+}
+.home-menu-block a{
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+.search{
+    margin: 10px;
+}
+.login-top{
+    width: 100%;
+    height: 2rem;
+    background: #007bff;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    line-height: 2rem;
+}
+.login-top a{
+    color: #fff !important;
+}
+.top-menu-block{
+    text-align: center;
+    font-size: 0.8rem;
+}
+.center-menu-block{
+    text-align: center;
+    font-size: 0.7rem;
+}
+.sideNav{
+    position: fixed;
+    z-index: 9999;
+    width: 5rem;
+    height: 100%;
+    background: #333;
+    right: -5rem;
+    top:0;
+    color: #fff;
+    overflow-y: scroll;    
+}
+.sideNav ul{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.sideNav .navitem{
+    display: block;
+    list-style: none;
+    margin: 1rem auto !important;
+    text-align: center;
+}
+.list-group a:link,.list-group a:hover,.list-group a:visited,.list-group a:active{
+    color: #495057 !important;
+    text-decoration: none;
+}
+.searchCondition{
+    padding: 10px 5px;
+    margin-top: 5px;
+}
+.search .input-group{
+    font-size: 14px;
+    height: 40px;
+}
+.search .input-group input{
+    font-size: 0.7rem;
+}
+#searchBtn{
+    font-size: 0.7rem;
+}
+.postlist .list-group-item-action{
+    padding: 0.5rem 0.9rem;
+}
+.postlist p{
+    margin-bottom: 0.3rem;
+}
+.postlist .title{
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #333;
+}
+.postlist .content{
+    font-size: 0.7rem;
+}
+.postlist .time{
+    font-size: 0.7rem;
+    color: #444;
+}
+.postlist .location{
+    font-size: 0.7rem;
+    color: #444;
+}
+.postlist .media .vedio{
+    width: 100% !important;
+    height: auto; 
+}
+.postlist .avatar{
+    text-align: center;
+}
+.postlist .avatar img{
+    width: 100% !important;
+    height: auto; 
+    margin: 0 auto;
+}
+.admin-container{
+    width: 100%;
+    min-height: 100%;
+}
+.admin-container .navbar{
+    background:  #007bff;
+    color: #fff;
+    height: 2.5rem;
+}
+.admin-container .navbar span a{
+    color: #fff;
+}
+.admin-container .navbar span a:hover,.admin-container .navbar span a:link,.admin-container .navbar span a:visited{
+    text-decoration: none;
+}
+.admin-container .navbar ul{
+    position: absolute;
+    right: 2.5rem;
+}
+.admin-container .navbar ul li{
+    display: inline;
+    padding: 0 1rem;
+}
+.admin-container .navbar ul li a{
+    color: #fff;
+    cursor: pointer;
+}
+.admin-container .navbar ul li a:hover,.admin-container .navbar ul li a:link,.admin-container .navbar ul li a:visited{
+    text-decoration: none;
+}
+.admin-container .menubox{
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+}
+.admin-container .menubox .sidebar{
+    width: 15%;
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    background: #333;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    text-align: center;
+}
+.admin-container .menubox .main{
+    display: inline-block;
+    width: 85%;
+    height: 100%;
+    right: 0;
+    position: absolute;
+    background: #eee;
+    overflow-y: scroll;
+}
+.admin-container .menubox .sidebar .menu{
+    padding: 0.7rem;
+    border-bottom: 1px solid #444;
+}
+.admin-container .menubox .sidebar .menu a{
+    color: #fff;
+}
+.admin-container .sidebar .menu a:hover,.admin-container .sidebar .menu a:link,.admin-container .sidebar .menu a:visited{
+    text-decoration: none;
+}
+.admin-container .menubox .main .menutitle{
+    text-align: left;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-left: 10px solid #007bff;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 2px 2px 2px #ddd;
+    -webkit-box-shadow: 2px 2px 2px #ddd;
+    -moz-box-shadow: 2px 2px 2px #ddd;
+    margin-bottom: 0;
+    background: #fff;
+}
+.admin-container .searchbox{
+    box-shadow: 2px 2px 2px #ddd;
+    -webkit-box-shadow: 2px 2px 2px #ddd;
+    -moz-box-shadow: 2px 2px 2px #ddd;
+    background: #fff;
+    padding: 0.5rem;
+    text-align: left;
+}
+.admin-container .formbox{
+    padding: 0.5rem;
+}
+.admin-container .searchbox .col-xs-4{
+    margin-bottom:0.5rem; 
+}
+.admin-container .searchbox input{
+    margin-right: 2rem;
+}
+.admin-container .searchbox .btn{
+    background:  #007bff;
+    width: 6rem;
+    border-radius:2px;
+    padding: 0.2rem 0.5rem; 
+    margin-top:0.5rem; 
+    font-size: 0.7rem;
+    color: #fff;
+}
+.admin-container .formbody{
+    margin: 0.5rem;
+    background: #fff;
+    box-shadow: 2px 2px 2px #ddd;
+    -webkit-box-shadow: 2px 2px 2px #ddd;
+    -moz-box-shadow: 2px 2px 2px #ddd;
+}
+.admin-container .formbody .detail,.admin-container .formbody .edit,.admin-container .formbody .delete{
+    cursor: pointer;
+    padding: 0 0.5rem;
+    color: #007bff;
+}
+.admin-container .postContent{
+    background: #fff;
+    box-shadow: 2px 2px 2px #ddd;
+    -webkit-box-shadow: 2px 2px 2px #ddd;
+    -moz-box-shadow: 2px 2px 2px #ddd;
+    text-align: left;
+    padding: 2rem;
+    padding-bottom: 5rem;
+}
+.admin-container .postContent h5{
+    margin-bottom: 2rem;
+}
+.fc-blue{
+    color: #007bff !important;
+    font-weight: bold;
+}
+.admin-container .editbtn,.formbox .editbtn{
+    background: #007bff;
+    width: 6rem;
+    border-radius: 2px;
+    padding: 0.3rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+.admin-container .postContent label{
+    width: 5rem;
+    text-align: right;
+}
+.admin-container .postContent input{
+    padding: 0.2rem 0.5rem;
+}
+.admin-container .postContent .textarealabel{
+    position: relative;
+    top: -9rem;
+}
+.admin-container .postContent textarea{
+    width: 30rem;
+    height: 10rem;
+}
+.postContent .card{
+    margin: 1rem;
+}
+.formbox .postContent .card-upload{
+    padding: 0;
+    margin: 1rem 0;
+}
+#preview{
+    width: 5rem;
+    height: auto;
+}
+.docimg{
+    width: 10rem;
+    height: auto;
+}
+.vedioEdit{
+    width: 20%;
+}
+.video_iframe #tenvideo_video_player_0{
+    width: 50% !important;
+}
+.textpre{
+white-space: pre-wrap; /*css-3*/ 
+white-space: -moz-pre-wrap; /*Mozilla,since1999*/ 
+white-space: -pre-wrap; /*Opera4-6*/ 
+white-space: -o-pre-wrap; /*Opera7*/ 
+word-wrap: break-word; /*InternetExplorer5.5+*/
+}

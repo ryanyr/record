@@ -1,0 +1,17 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <h5>{{doctor.name}}</h5>
+        <p><img src="{{doctor.avatar}}" alt="" class="docimg"/></p>
+        <p><span class="fc-blue">医院或机构</span>：{{doctor.company}}</p>
+        <p><span class="fc-blue">科室</span>：{{doctor.department}}</p>
+        <p><span class="fc-blue">年龄</span>：{{doctor.age}}</p>
+        <p><span class="fc-blue">联系方式</span>：{{doctor.telephone}}</p>
+        <p><span class="fc-blue">介绍</span>：{{post.intro}}</p>
+        <br/>
+        <p><a href="/admin/editdoctor?id={{doctor.id}}"><span class="editbtn">编辑</span></a></p>
+    </div>
+</div>
+{% endblock %}

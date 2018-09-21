@@ -1,0 +1,116 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<!-- Modal -->
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">提示</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          确认删除此条数据？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="deleteComfirm" class="btn btn-primary">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="formbox">
+    <div class='searchbox'>
+        <div class="row">
+            <div class="col-xs-4">
+                <label for="name">姓名:</label>
+                <input type="text" name="name" id="name" />
+            </div> 
+            <div class="col-xs-4">
+                <label for="department">学科:</label>
+                <input type="text" name="department" id="department" />
+            </div>
+            <div class="col-xs-4">
+                <label for="company">所属医院或机构:</label>
+                <input type="company" name="year" id="company" />
+            </div>            
+        </div>        
+        <div class="row"></div>
+            <div class="col-xs-12">
+                <span class='btn searchbtn'>查询</span>
+                <span class='btn resetbtn'>重置</span>
+                <a href="/admin/adddoctor"><span class='btn addbtn'>新增</span></a>
+            </div>  
+        </div>    
+    </div>   
+    <div class='formbody'>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">姓名</th>
+                <th scope="col">学科</th>
+                <th scope="col">医院或机构</th>
+                <th scope="col">联系方式</th>
+                <th scope="col">添加时间</th>
+                <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr class="datarow">
+                    <td>{{doctor.name}}</td>
+                    <td>{{doctor.department}}</td>
+                    <td>{{doctor.company}}</td>
+                    <td>{{doctor.telephone}}</td>
+                    <td>{{doctor.last_sign_in}}</td>
+                    <td>
+                        <a href="/admin/doctor?id={{doctor.id}}"><span class="detail" dataid={{doctor.id}}>查看</span></a>
+                        <a href="/admin/editdoctor?id={{doctor.id}}"><span class="edit" dataid={{doctor.id}}>编辑</span></a>
+                        <a><span class="delete" id='deleteBtn' onclick="getid(this)" data-toggle="modal" data-target="#dialog" dataid={{doctor.id}}>删除</span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>  
+</div>
+<script>
+    var deleteId = '';
+    function getid(obj){
+        deleteId = $(obj).attr('dataid');
+    }
+    $('#deleteComfirm').click(function(){
+        $('#dialog').modal('hide');
+        var id = deleteId;
+        var data = {
+            id:id
+        }
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+            },
+            url:'deletedoctor',
+            method:'post',
+            datatype: 'json',
+            // contentType:'application/x-www-form-urlencoded',
+            data : JSON.stringify(data),
+            contentType: 'application/json',
+            processData: false,
+        }).done(function(res){
+            var data = res.message;
+            // if(data.length>0){
+                alert(data);
+                window.location.reload(true);
+                // window.location.pathname ='admin/index';
+                // displayPost(data);
+            // }        
+        }).fail(function(err){
+            alert('发生错误');
+        }) 
+    });
+ </script>
+{% endblock %}

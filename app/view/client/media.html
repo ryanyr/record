@@ -1,0 +1,34 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+
+<div class="search">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="输入视频关键字">
+        <div class="input-group-append">
+            <button id='searchBtn' class="btn btn-outline-secondary" type="button">搜索</button>
+        </div>
+    </div>
+</div>
+<div class="postlist">
+    <div class="list-group">
+        <div  class="list-group-item list-group-item-action flex-column align-items-start"></a>
+            <div class="d-flex w-100 justify-content-between">
+            <p class="title">{{media.title}}</p>            
+            </div>
+            <p class="content">主讲人：{{media.author}}</p>
+            <p class="location">会议地点：{{media.province}}-{{media.city}}</p>
+            <p class="content">科室：{{media.department}}</p>
+            <p class="time">视频发布时间：{{media.posttime}}</p>            
+            <p class="content">视频简介：{{media.intro}}</p>            
+            <p class="media">
+                {{media.mediaurl | safe}}
+            </p>  
+            <!-- <p class="media">
+                <video class="vedio" src="{{media.mediaurl}}" controls="controls">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </p>     -->        
+            <p class="content"><pre class="textpre">{{media.content}}</pre></p>
+        </div>
+    </div>
+</div>
+{% endblock%}

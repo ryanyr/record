@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/css.css">
+    <script src="../public/js/jquery.min.js"></script>
+    <script src="../public/js/popper.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
+    <script src="../public/js/admin.js"></script>
+</head>
+<body>
+    <script src="../public/js/carousel.js"></script>
+    <script src="../public/js/util.js"></script>
+    
+    <div class="text-center admin-container">
+        <nav class="navbar">
+            <span><a href="/admin/index">平台管理端</a></span>
+            <ul>
+                <li>admin</li>
+                <li><a href="/admin/modifycode">修改密码</a></li>
+                <li><a href="/admin/logout">退出</a></li>
+            </ul>
+        </nav>
+        <div class="menubox">
+            <div class="sidebar">
+                <div class="menu"><a href="/admin/userlist">用户管理</a></div>
+                <div class="menu"><a href="/admin/postlist">会议管理</a></div>
+                <div class="menu"><a href="/admin/medialist">视频管理</a></div>
+                <div class="menu"><a href="/admin/doctorlist">专家管理</a></div>
+                <div class="menu"><a href="/admin/system">系统管理</a></div>
+            </div>
+            <div class="main">
+                    {% block content %}
+                    {% endblock %}
+            </div>
+
+            <div class="clear"></div>
+    </div>
+    </div>    
+</body>
+</html>

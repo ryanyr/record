@@ -1,0 +1,99 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<link rel="stylesheet" href="../public/css/bootstrap-datepicker.min.css">
+<script src="../public/js/bootstrap-datepicker.min.js"></script>
+<script src="../public/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <p>
+            <label for="title">标题:</label>
+            <input type="text" name="title" id="title" placeholder="请输入标题"/>
+        </p>
+        <p>
+            <label for="meeting_time">会议时间:</label>
+            <input id="datetimepicker" name='meeting_time' type="text" >
+            <input id="hours" name='meeting_time' type="text" >时
+            <input id="minutes" name='meeting_time' type="text" >分
+        </p>
+        <p>
+            <label for="province">会议地点:</label>
+            <input type="text" name="province" id="province" placeholder="省份"/>省
+            <input type="text" name="city" id="city" placeholder="城市"/>市
+        </p>
+        <p>
+            <label for="department">科室:</label>
+            <input type="text" name="department" id="department" placeholder="科室"/>
+        </p>
+        <p>
+            <label for="participant_id">与会人员:</label>
+            <input type="text" name="title" id="participant_id" placeholder="与会人员"/>
+        </p>
+        <p>
+            <label for="intro" class="textarealabel">会议简介:</label>
+            <textarea type="text" name="intro" id="intro"></textarea>
+        </p>
+        <p>
+            <label for="title" class="textarealabel">会议详情:</label>
+            <textarea type="text" name="content" id="content"></textarea>
+        </p>
+        <br/>
+        <p><span class="editbtn" id="saveBtn">保存</span></p>
+    </div>
+    <script>
+        $('#datetimepicker').datepicker({
+            "autoclose":true,
+            "format":"yyyy-mm-dd",
+            "language":"zh-CN"            
+        });
+        
+        $('#saveBtn').click(function(){
+            var title = $('#title').val();
+            var date = $('#datetimepicker').val();
+            var hour = $('#hours').val();
+            var minute = $('#minutes').val();
+            var province = $('#province').val();
+            var city = $('#city').val();
+            var department = $('#department').val();
+            var participant_id = $('#participant_id').val();
+            var intro = $('#intro').val();
+            var content = $('#content').val();
+            var data = {
+                title:title,
+                date:date,
+                hour:hour,
+                minute:minute,
+                province:province,
+                city:city,
+                department:department,
+                participant_id:participant_id,
+                intro:intro,
+                content:content
+            }
+            $.ajax({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('x-csrf-token', csrftoken);
+                    }
+                },
+                url:'savepost',
+                method:'post',
+                datatype: 'json',
+                // contentType:'application/x-www-form-urlencoded',
+                data : JSON.stringify(data),
+                contentType: 'application/json',
+                processData: false,
+            }).done(function(res){
+                var data = res.message;
+                // if(data.length>0){
+                    alert(data);
+                    // window.location.pathname ='admin/index';
+                    // displayPost(data);
+                // }        
+            }).fail(function(err){
+                alert('发生错误');
+            }) 
+        });
+     </script>
+</div>
+{% endblock %}

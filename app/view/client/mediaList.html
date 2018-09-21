@@ -1,0 +1,80 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+
+<div class="search">
+    <div class="input-group">
+        <input type="text" id="searchKeywords" class="form-control" placeholder="输入视频关键字">
+        <div class="input-group-append">
+            <button id='searchBtn' class="btn btn-outline-secondary" type="button" onclick="searchByKeywords()">搜索</button>
+        </div>
+    </div>
+</div>
+<div class="postlist">
+    <div class="list-group">
+        {% for media in media %}
+        <a href="/media?id={{media.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+            <p class="title">{{media.title}}</p>            
+            </div>
+            <p class="content">主讲人：{{media.author}}</p>
+            <p class="location">会议地点：{{media.province}}-{{media.city}}</p>
+            <p class="content">科室：{{media.department}}</p>
+            <p class="time">视频发布时间：{{media.posttime}}</p>            
+            <p class="content">视频简介：{{media.intro}}</p>            
+        </a>
+        {% endfor%}
+    </div>
+</div>
+<script>
+    function searchByKeywords(){
+    var keyword = $('#searchKeywords').val();
+    $.ajax({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader('x-csrf-token', csrftoken);
+            }
+          },
+        url:'/getMediaByKeywords',
+        method:'get',
+        // datatype: 'json',
+        data : 'keyword=' + keyword,
+        contentType: false,
+        processData: false,
+    }).done(function(data){
+        var data = data.media;
+        // if(data.length>0){
+            console.log(1);
+            console.log(data);
+            displayMedia(data);
+        // }        
+    }).fail(function(data){
+        console.log(err);
+        alert('error');
+    }) 
+}
+
+function displayMedia(data){
+    $('.list-group').empty();
+    var post = '';
+    if(data.length>0){
+        for(var i=0;i<data.length;i++){
+            var item = '<a href="/media?id='+ data[i].id +'" class="list-group-item list-group-item-action flex-column align-items-start">'+
+                            '<div class="d-flex w-100 justify-content-between">'+
+                            '<p class="title">'+ data[i].title +'</p>'+            
+                            '</div>'+
+                            '<p class="content">主讲人：' + data[i].author +'</p>'+
+                            '<p class="location">会议地点：' + data[i].province +'-' + data[i].city +'</p>'+
+                            '<p class="time">科室：' + data[i].department +'</p>'+
+                            '<p class="content">视频发布时间：' + (data[i].post_time).substring(0,10) + '</p>' +  
+                            '<p class="content">视频简介：' + data[i].intro + '</p>' +                            
+                        '</a>';
+            post +=item;
+        }
+    }else{
+        post = '<div class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between">暂无数据</div></div>';
+    }
+    
+    $('.list-group').html(post);
+}
+</script>
+
+{% endblock%}

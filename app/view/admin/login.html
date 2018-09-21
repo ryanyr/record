@@ -1,0 +1,29 @@
+{% block content %}
+<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+<link rel="stylesheet" href="../public/css/css.css">
+<script src="../public/js/jquery.min.js"></script>
+<script src="../public/js/popper.min.js"></script>
+<script src="../public/js/bootstrap.min.js"></script>
+<script src="../public/js/admin.js"></script>
+<link href="../public/css/signin.css" rel="stylesheet">
+<script src="../public/js/carousel.js"></script>
+<script src="../public/js/util.js"></script>
+
+<div class="container text-center admin-container">
+    <form class="form-signin" id='form-signin'>
+        <h1 class="h3 mb-3 font-weight-normal">平台管理端</h1>
+        <label for="inputEmail" class="sr-only">用户名</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="请输入手机号" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" required>
+        <span class="btn btn-lg btn-primary btn-block" id="submit" onclick="doLogin()">登录</span>
+        {% if(msg)%}
+        <div class="alert alert-warning" role="alert">
+            账号失效，请先登录
+          </div>
+        {% endif %}
+        <p class="mt-5 mb-3 text-muted">若无账号,<a href="reg">立即注册</a></p>
+        <p class="mt-5 mb-3 text-muted">&copy;2018-2019</p>
+      </form>
+</div>
+{% endblock %}

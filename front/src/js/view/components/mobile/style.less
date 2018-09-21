@@ -1,0 +1,106 @@
+@th:0.88rem;
+
+.mitem{
+    margin:0.5rem 0;
+    padding: 0.5rem;
+    border: solid 1px #ccc;
+    border-radius: 8px;
+    box-shadow: #aaa 2px 2px 2px;
+    -webkit-box-shadow: #ddd 5px 5px 2px;
+     .mitem-body{
+        width: 100%;
+        height: 5rem;
+        border-bottom: solid #ccc 1px;
+        .mitem-imgbox{
+            display: inline-block;
+            width: 30%;
+            height: 5rem;
+            .mitem-img{
+                width: 4.5rem;
+                height: 4.5rem;
+            }
+        }
+        .mitem-r1{
+            display: inline-block;
+            width: 66%;
+            padding-left: 0.5rem;
+            .mitem-pname{
+                color: #333;
+                font-size: 0.8rem;
+                position: relative;
+                top: -0.2rem;
+                font-weight: bold;
+            }
+            .mitem-pintro{
+                color: #aaa;
+                font-size: 0.7rem;
+                span{
+                    color:#999;
+                    border: solid #999 1px;
+                    border-radius: 8px;
+                    position: relative;
+                    // top: -0.3rem;
+                    margin-right: 0.2rem;
+                    padding: 0.1rem;
+                }
+            }
+            .mitem-unit{
+                width: 50%;
+                display: inline-block;
+            }
+            .unit1{
+                color: #138dff;
+                .mitem-data{
+                    font-size: 1rem;
+                }
+                .mitem-param{
+                    font-size: 0.6rem;
+                    color: #666;
+                }
+            }
+            .unit2{
+                color: #ff8400;
+                .mitem-data{
+                    font-size: 1rem;
+                }
+                .mitem-param{
+                    font-size: 0.6rem;
+                    color: #666;
+                }
+            }
+        }
+    } 
+    .mitem-intro{
+        line-height: 1.2rem;
+        height: 1rem;
+        font-size: 0.6rem;
+        .mitem-desc{
+            float: left;
+            color: #666;
+        }
+        .mitem-apply{
+            float: right;
+            color: #666;
+        }
+    } 
+}
+
+.tag{
+    margin:0.5rem;
+    span{
+        width: 12%;
+        border: 1px solid #999;
+        font-size: 0.6rem;
+        padding: 0.2rem;
+        margin: 0.5rem 0.3rem;
+        border-radius: 8px;
+    }
+    span.clicked{
+        background: orangered;
+        color: #fff;
+        border: none;
+    }
+}
+
+
+

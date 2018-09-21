@@ -1,0 +1,40 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+<div class="sideNav">
+    <ul>
+        {% for navItem in navItems %}
+        <li>{{navItem.id}}</li>
+        {% endfor%}
+    </ul>
+</div>
+<div class="searchCondition">
+    <div class="row">
+        <div id='selectDistrict' class="col-3 center-menu-block" data-val=''>选择省份</div>
+        <div id='selectDepartment' class="col-3 center-menu-block" data-val=''>选择学科</div>
+        <div id='selectYear' class="col-3 center-menu-block" data-val=''>选择年份</div>
+        <div id='selectMonth' class="col-3 center-menu-block" data-val=''>选择月份</div>
+    </div>
+</div>
+<div class="search">
+    <div class="input-group">
+        <input type="text" class="form-control" id="searchKeywords" placeholder="输入会议标题关键字">
+        <div class="input-group-append">
+            <button id='searchBtn' class="btn btn-outline-secondary" type="button" onclick="searchByKeywords()">搜索</button>
+        </div>
+    </div>
+</div>
+<div class="postlist">
+    <div class="list-group">
+        {% for post in posts %}
+        <a href="/post?id={{post.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+            <p class="title">{{post.title}}</p>            
+            </div>
+            <p class="time">{{post.meetingTime}}</p>
+            <p class="content">{{post.intro}}</p>
+            <p class="location">{{post.province}}-{{post.city}}</p>
+        </a>
+        {% endfor%}
+    </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,76 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+  <div class='row postContent'>
+      <div class="xs-col-4">
+          <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="../public/img/2.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">上传第一张</h5>
+                <p class="card-text">建议尺寸为500px*300px</p>
+                <input class="card-upload" name="file" type="file" />
+                <span class="btn btn-primary uploadBtn" data-id='1'>上传</span>
+                <!-- <span class="btn btn-primary saveBtn" data-id='1'>保存</span> -->
+              </div>
+            </div>
+      </div>
+      <div class="xs-col-4">
+          <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="../public/img/2.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">上传第二张</h5>
+                <p class="card-text">建议尺寸为500px*300px</p>
+                <input class="card-upload" name="file" type="file" />
+                <span class="btn btn-primary uploadBtn" data-id='2'>上传</span>
+                <!-- <span class="btn btn-primary saveBtn" data-id='2'>保存</span> -->
+              </div>
+            </div>
+      </div>
+      <div class="xs-col-4">
+          <div class="card" style="width: 18rem;">
+              <img class="card-img-top" src="../public/img/2.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">上传第三张</h5>
+                <p class="card-text">建议尺寸为500px*300px</p>
+                <input class="card-upload" name="file" type="file" />
+                <span class="btn btn-primary uploadBtn" data-id='3'>上传</span>
+                <!-- <span class="btn btn-primary saveBtn" data-id='3'>保存</span> -->
+              </div>
+            </div>
+      </div>
+  </div>
+</div>
+<script>
+        $('.uploadBtn').click(function(){
+          var $this = $(this);
+          var formData = new FormData();
+          // Attach file
+          formData.append('postkey', $(this).attr('data-id'));
+          formData.append('image', $(this).siblings('input')[0].files[0]);
+          console.log(formData);
+      
+          $.ajax({
+            beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('x-csrf-token', csrftoken);
+                    }
+                },
+            url: 'uploadBanner',
+            data: formData,
+            method: 'POST',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            success: function(result) {
+              console.log(result);
+              var url =  result.url;
+              $this.parents('.card').find('.card-img-top').attr('src',url);
+              // location.href = result.url;
+            },
+            error: function(responseStr) {
+              alert("error", responseStr);
+            }
+          });
+        });
+        </script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "template.html" %} 
+{% block content %}
+<script src="public/js/carousel.js"></script>
+<script src="public/js/util.js"></script>
+
+<div class="container text-center home-container">
+    <!-- Content here -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" postkey={{banners[0].postkey}} src="{{banners[0].url}}" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" postkey={{banners[1].postkey}} src="{{banners[1].url}}" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" postkey={{banners[2].postkey}} src="{{banners[2].url}}" alt="Third slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="home-menu">
+        <div class="row">
+            <div class="col-6 home-menu-block bg-success">
+                <a href="/monthy">
+                本月会议
+                </a>
+            </div>
+            <div class="col-6 home-menu-block bg-warning">
+                <a href="/hot">
+                热门会议
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 home-menu-block bg-primary">
+                <a href="/all">
+                会议查询
+                </a>
+            </div>
+            <div class="col-6 home-menu-block bg-danger">
+                <a href="/mediaList">
+                讲座视频
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col home-menu-block bg-info">
+                <a href="/doctors">
+                专家学者
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- {% include "../nav.html" %} -->
+</div>
+{% endblock %}

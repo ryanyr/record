@@ -1,0 +1,22 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <h5>{{post.title}}</h5>
+        <p><span class="fc-blue">发布时间</span>：{{post.postTime}}</p>
+        <p><span class="fc-blue">会议地点</span>：{{post.province}}-{{post.city}}</p>
+        <p><span class="fc-blue">科室</span>：{{post.department}}</p>
+        <p><span class="fc-blue">主讲人</span>：{{post.author}}</p>
+        <p><span class="fc-blue">会议简介</span>：{{post.intro}}</p>
+        <p><span class="fc-blue">会议详情</span>：{{post.content}}</p>
+        <p><span class="fc-blue">会议链接</span>：{{post.mediaurl}}</p>
+        <!-- <p><video class="vedio" src="{{post.mediaurl}}" controls="controls">
+                您的浏览器不支持 video 标签。
+            </video></p> -->
+        <p><span class="vedio">{{post.mediaurl | safe}}</span></p>
+        <br/>
+        <p><a href="/admin/editmedia?id={{post.id}}"><span class="editbtn">编辑</span></a></p>
+    </div>
+</div>
+{% endblock %}

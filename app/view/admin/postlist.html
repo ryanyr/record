@@ -1,0 +1,287 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<!-- Modal -->
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">提示</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          确认删除此条数据？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="deleteComfirm" class="btn btn-primary">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="formbox">
+    <div class='searchbox'>
+        <div class="row">
+            <div class="col-xs-4">
+                <label for="province">省份:</label>
+                <input type="text" name="province" id="province" />
+            </div>
+            <div class="col-xs-4">
+                    <label for="city">城市:</label>
+                    <input type="text" name="city" id="city" />
+                </div>
+            <div class="col-xs-4">
+                <label for="department">学科:</label>
+                <input type="text" name="department" id="department" />
+            </div>
+            <div class="col-xs-4">
+                <label for="year">年份:</label>
+                <input type="text" name="year" id="year" />
+            </div>
+            <div class="col-xs-4">
+                <label for="contentkewords">会议内容关键字:</label>
+                <input type="text" name="contentkewords" id="contentkewords" />
+            </div>    
+            <div class="col-xs-4">
+                <label for="participatkewords">会议参与者关键字:</label>
+                <input type="text" name="participatkewords" id="participatkewords" />
+            </div> 
+        </div>
+        
+        <div class="row"></div>
+            <div class="col-xs-12">
+                <span class='btn searchbtn' onclick="searchPost()">查询</span>
+                <span class='btn resetbtn' onclick="clearSearch()">重置</span>
+                <a href="/admin/addpost"><span class='btn addbtn'>新增</span></a>
+            </div>  
+        </div>    
+    </div>   
+    <div class='formbody'>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">会议标题</th>
+                <th scope="col">学科</th>
+                <th scope="col">简介</th>
+                <th scope="col">参与人</th>
+                <th scope="col">省份</th>
+                <th scope="col">城市</th>
+                <th scope="col">发布人</th>
+                <th scope="col">会议时间</th>
+                <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody id='tbody'>
+                {% for post in posts %}
+                <tr class="datarow">
+                    <td>{{post.title}}</td>
+                    <td>{{post.department}}</td>
+                    <td>{{post.intro}}</td>
+                    <td>{{post.participant_id}}</td>
+                    <td>{{post.province}}</td>
+                    <td>{{post.city}}</td>
+                    <td>{{post.author}}</td>
+                    <td>{{post.meetingTime}}</td>
+                    <td>
+                        <a href="/admin/post?id={{post.id}}"><span class="detail" dataid={{post.id}}>查看</span></a>
+                        <a href="/admin/editpost?id={{post.id}}"><span class="edit" dataid={{post.id}}>编辑</span></a>
+                        <a><span class="delete" id='deleteBtn' onclick="getid(this)" data-toggle="modal" data-target="#dialog" dataid={{post.id}}>删除</span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">              
+              {% if totalsize==1 %} 
+              <li class="page-item active"><a class="page-link" pagenum="">1</a></li>
+              {% elseif totalsize==2 %} 
+              <li class="page-item active"><a class="page-link" pagenum="1" onclick="goPage(this)">1</a></li>
+              <li class="page-item"><a class="page-link" pagenum="2" onclick="goPage(this)">2</a></li>
+              {% elseif totalsize==3 %} 
+              <li class="page-item active"><a class="page-link" pagenum="1" onclick="goPage(this)">1</a></li>
+              <li class="page-item "><a class="page-link" pagenum="2" onclick="goPage(this)">2</a></li>
+              <li class="page-item"><a class="page-link" pagenum="3" onclick="goPage(this)">3</a></li>
+              {% elseif totalsize>3 %} 
+              <li class="page-item"><a class="page-link" pagenum="0" onclick="goPage(this)">首页</a></li>
+              <!-- <li class="page-item"><a class="page-link" pagenum="pre" onclick="goPage(this)">上一页</a></li> -->
+              <li class="page-item active"><a class="page-link" pagenum="1" id="p1" onclick="goPage(this)">1</a></li>
+              <li class="page-item"><a class="page-link" pagenum="2" id="p2" onclick="goPage(this)">2</a></li>
+              <li class="page-item"><a class="page-link" pagenum="3" id="p3" onclick="goPage(this)">3</a></li>
+              <!-- <li class="page-item"><a class="page-link" pagenum="next" onclick="goPage(this)">下一页</a></li> -->
+              <li class="page-item"><a class="page-link" pagenum="{{totalsize}}" id="totalsize" onclick="goPage(this)">末页</a></li>
+            {% endif %}
+            </ul>
+          </nav>
+    </div>  
+</div>
+<script>
+    var deleteId = '';
+    function getid(obj){
+        deleteId = $(obj).attr('dataid');
+    }
+    $('#deleteComfirm').click(function(){
+        $('#dialog').modal('hide');
+        var id = deleteId;
+        var data = {
+            id:id
+        }
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+            },
+            url:'deletepost',
+            method:'post',
+            datatype: 'json',
+            // contentType:'application/x-www-form-urlencoded',
+            data : JSON.stringify(data),
+            contentType: 'application/json',
+            processData: false,
+        }).done(function(res){
+            var data = res.message;
+            // if(data.length>0){
+                alert(data);
+                window.location.reload(true);
+                // window.location.pathname ='admin/index';
+                // displayPost(data);
+            // }        
+        }).fail(function(err){
+            alert('发生错误');
+        }) 
+    });
+    function searchPost(){
+        var searchCondition = {
+            currentpage:1,
+            province:$('#province').val(),
+            city:$('#city').val(),
+            department:$('#department').val(),
+            year:$('#year').val(),
+            contentkewords:$('#contentkewords').val(),
+            participatkewords:$('#participatkewords').val()
+        }
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+            },
+            url:'findPost',
+            method:'post',
+            datatype: 'json',
+            // contentType:'application/x-www-form-urlencoded',
+            data : JSON.stringify(searchCondition),
+            contentType: 'application/json',
+            processData: false,
+        }).done(function(res){
+            var data = res.posts;
+            displayPost(data);
+            
+        }).fail(function(err){
+            alert('发生错误');
+        }) 
+    }
+    function clearSearch(){
+        // alert(1);
+        $('#province').val('');
+        $('#city').val('');
+        $('#department').val('');
+        $('#year').val('');
+        $('#contentkewords').val('');
+        $('#participatkewords').val('');
+        window.history.go(-1);
+    }
+    function displayPost(data){
+        $('#tbody').empty();
+        var post = '';
+        if(data.length>0){
+            for(var i=0;i<data.length;i++){
+                var item = '<tr class="datarow">'+
+                    '<td>'+data[i].title+'</td>'+
+                    '<td>'+data[i].department+'</td>'+
+                    '<td>'+data[i].intro+'</td>'+
+                    '<td>'+data[i].participant_id+'</td>'+
+                    '<td>'+data[i].province+'</td>'+
+                    '<td>'+data[i].city+'</td>'+
+                    '<td>'+data[i].author+'</td>'+
+                    '<td>'+data[i].meeting_time+'</td>'+
+                    '<td>'+
+                        '<a href="/admin/post?id='+data[i].id+'"><span class="detail" dataid='+data[i].id+'>查看</span></a>'+
+                        '<a href="/admin/editpost?id='+data[i].id+'"><span class="edit" dataid='+data[i].id+'>编辑</span></a>'+
+                        '<a><span class="delete" id="deleteBtn" onclick="getid(this)" data-toggle="modal" data-target="#dialog" dataid='+data[i].id+'>删除</span></a>'+
+                    '</td>'+
+                '</tr>';
+                post +=item;
+            }
+        }else{
+            post = '<tr class="datarow">暂无数据</tr>';
+        }
+        
+        $('#tbody').html(post);
+    }
+    function goPage(obj){
+        var currentpage = 1;
+        var $this = $(obj);
+        var pagenum = parseInt($this.attr('pagenum'));
+        var totalsize = {{totalsize}};
+        if(pagenum==0){
+            $('#p1').attr('pagenum',1).html(1);
+            $('#p2').attr('pagenum',2).html(2);
+            $('#p3').attr('pagenum',3).html(3);
+            $('#p1').parents('li').addClass('active').siblings('li').removeClass('active');
+            pagenum = 1;
+        }else if(pagenum==1||pagenum==2){
+            if(pagenum+1<=totalsize){
+
+            }
+            $this.parents('li').addClass('active').siblings('li').removeClass('active');
+        }else if(pagenum==3){
+            $this.parents('li').addClass('active').siblings('li').removeClass('active');
+        }else{
+            if(pagenum+1<=totalsize){
+                $('#p1').attr('pagenum',pagenum-1).html(pagenum-1);
+                $('#p2').attr('pagenum',pagenum).html(pagenum);
+                $('#p3').attr('pagenum',pagenum+1).html(pagenum+1);
+                $('#p2').parents('li').addClass('active').siblings('li').removeClass('active');
+            }else if(pagenum==totalsize){
+                $('#p3').parents('li').addClass('active').siblings('li').removeClass('active');
+            }
+            
+        }
+        console.log(pagenum);
+        currentpage = pagenum;
+        var searchCondition = {
+            currentpage:currentpage,
+            province:$('#province').val(),
+            city:$('#city').val(),
+            department:$('#department').val(),
+            year:$('#year').val(),
+            contentkewords:$('#contentkewords').val(),
+            participatkewords:$('#participatkewords').val()
+        }        
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+            },
+            url:'findPost',
+            method:'post',
+            datatype: 'json',
+            // contentType:'application/x-www-form-urlencoded',
+            data : JSON.stringify(searchCondition),
+            contentType: 'application/json',
+            processData: false,
+        }).done(function(res){
+            var data = res.posts;
+            displayPost(data);
+            
+        }).fail(function(err){
+            alert('发生错误');
+        }) 
+    }
+ </script>
+{% endblock %}

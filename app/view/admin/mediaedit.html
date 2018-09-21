@@ -1,0 +1,92 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<link rel="stylesheet" href="../public/css/bootstrap-datepicker.min.css">
+<script src="../public/js/bootstrap-datepicker.min.js"></script>
+<script src="../public/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <p>
+            <label for="title">标题:</label>
+            <input type="text" name="title" id="title" placeholder="{{post.title}}" value="{{post.title}}"/>
+        </p>
+        <p>
+            <label for="province">会议地点:</label>
+            <input type="text" name="province" id="province" placeholder="省份" value="{{post.province}}"/>省
+            <input type="text" name="city" id="city" placeholder="城市" value="{{post.city}}"/>市
+        </p>
+        <p>
+            <label for="department">科室:</label>
+            <input type="text" name="department" id="department" placeholder="科室" value="{{post.department}}"/>
+        </p>
+        <p>
+            <label for="author">主讲人:</label>
+            <input type="text" name="author" id="author" placeholder="主讲人" value="{{post.author}}"/>
+        </p>
+        <p>
+            <label for="mediaurl">视频链接:</label>
+            <input type="text" class="vedioEdit" name="mediaurl" id="mediaurl" placeholder="填入视频id" value="{{post.mediaurl}}"/>
+            <div class="alert alert-warning">添加视频地址的唯一id码，打开腾讯视频网页后，将视频地址id贴在此处，如https://v.qq.com/x/cover/kifd35ul1tmuhr4/<span class="alert-link">v0643hc7sun</span>.html中加粗部分。</div>
+        </p>
+        <p>
+            <label for="intro" class="textarealabel">视频简介:</label>
+            <textarea type="text" name="intro" id="intro">{{post.intro}}</textarea>
+        </p>
+        <p>
+            <label for="content" class="textarealabel">视频详情:</label>
+            <textarea type="text" name="content" id="content">{{post.content}}</textarea>
+        </p>
+        <br/>
+        <p><span class="editbtn" id='saveBtn' postid='{{post.id}}'>保存</span></p>
+    </div>
+    <script>
+        $('#saveBtn').click(function(){
+            var id = $('#saveBtn').attr('postid');
+            var title = $('#title').val();
+            var province = $('#province').val();
+            var city = $('#city').val();
+            var department = $('#department').val();
+            var author = $('#author').val();
+            var intro = $('#intro').val();
+            var content = $('#content').val();
+            var mediaurl = $('#mediaurl').val();
+            //拼接视频url
+            mediaurl =  '<iframe class="video_iframe" style="z-index:1;" src="http://v.qq.com/iframe/player.html?vid=' + mediaurl +'&amp;width=500&amp;height=375&amp;auto=0&tiny=1" allowfullscreen="" frameborder="0" height="375" width="500"></iframe>';
+            var data = {
+                id:id,
+                title:title,
+                province:province,
+                city:city,
+                department:department,
+                author:author,
+                intro:intro,
+                content:content,
+                mediaurl:mediaurl
+            }
+            $.ajax({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('x-csrf-token', csrftoken);
+                    }
+                },
+                url:'updatemedia',
+                method:'post',
+                datatype: 'json',
+                // contentType:'application/x-www-form-urlencoded',
+                data : JSON.stringify(data),
+                contentType: 'application/json',
+                processData: false,
+            }).done(function(res){
+                var data = res.message;
+                // if(data.length>0){
+                    alert(data);
+                    // window.location.pathname ='admin/index';
+                    // displayPost(data);
+                // }        
+            }).fail(function(err){
+                alert('发生错误');
+            }) 
+        });
+     </script>
+</div>
+{% endblock %}

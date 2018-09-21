@@ -1,0 +1,132 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<link rel="stylesheet" href="../public/css/bootstrap-datepicker.min.css">
+<script src="../public/js/bootstrap-datepicker.min.js"></script>
+<script src="../public/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <p>
+            <label for="name">姓名:</label>
+            <input type="text" name="name" id="name" placeholder="请输入姓名" value="{{doctor.name}}"/>
+            <input type="text" id="id" value="{{doctor.id}}" hidden/>
+        </p>       
+        <p>
+            <label for="department">科室:</label>
+            <input type="text" name="department" id="department" placeholder="科室" value="{{doctor.department}}"/>
+        </p>
+        <p>
+            <label for="company">所属机构:</label>
+            <input type="text" name="company" id="company" placeholder="所属医院或机构" value="{{doctor.company}}"/>
+        </p>
+        <p>
+            <label for="telephone">联系方式:</label>
+            <input type="text" name="telephone" id="telephone" placeholder="联系方式" value="{{doctor.telephone}}"/>
+        </p>
+        <p>
+            <label for="age">年龄:</label>
+            <input type="text" name="age" id="age" placeholder="年龄" value="{{doctor.age}}"/>
+        </p>
+        <p>
+            <label for="avatar">照片:</label>
+            <input type="file" name="avatar" id="avatar" placeholder="照片"/>
+            <img id="preview" src="{{doctor.avatar}}"/>
+        </p>
+        <p>
+            <label for="intro" class="textarealabel">介绍:</label>
+            <textarea type="text" name="intro" id="intro">{{doctor.intro}}</textarea>
+        </p>        
+        <br/>
+        <p><span class="editbtn" id="saveBtn">保存</span></p>
+    </div>
+    <script>
+        $('#avatar').change(function () {
+            // console.log($(this));
+            var imgFile = this.files[0];
+            var fr = new FileReader();
+
+            fr.onload = function () {
+                // img.src = fr.result;
+                $('#preview').attr('src',fr.result);
+            };
+            // 注意要先设置回调再读取文件
+            fr.readAsDataURL(imgFile);
+        });
+        $('#saveBtn').click(function(){
+            var id = $('#id').val();
+            var name = $('#name').val();
+            var department = $('#department').val();
+            var company = $('#company').val();
+            var telephone = $('#telephone').val();
+            var age = $('#age').val();
+            var intro = $('#intro').val();
+            var avatar = $('#avatar')[0].files[0];
+            if(!!avatar){
+                var formData = new FormData();
+                formData.append('id', id);
+                formData.append('name', name);
+                formData.append('department', department);
+                formData.append('company', company);
+                formData.append('telephone', telephone);
+                formData.append('age', age);
+                formData.append('intro', intro);
+                formData.append('avatar', avatar);
+            
+                $.ajax({
+                beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader('x-csrf-token', csrftoken);
+                        }
+                    },
+                url: 'updatedoctor',
+                data: formData,
+                method: 'POST',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                success: function(result) {
+                    console.log(result);
+                    alert("保存成功");
+                },
+                error: function(responseStr) {
+                    alert("error", responseStr);
+                }
+                });
+            }else{
+                var data = {
+                    id:id,
+                    name:name,
+                    department:department,
+                    company:company,
+                    telephone:telephone,
+                    age:age,
+                    intro:intro
+                }
+                $.ajax({
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader('x-csrf-token', csrftoken);
+                        }
+                    },
+                    url:'updatedoctorwithout',
+                    method:'post',
+                    datatype: 'json',
+                    // contentType:'application/x-www-form-urlencoded',
+                    data : JSON.stringify(data),
+                    contentType: 'application/json',
+                    processData: false,
+                }).done(function(res){
+                    var data = res.message;
+                    // if(data.length>0){
+                        alert(data);
+                        // window.location.pathname ='admin/index';
+                        // displayPost(data);
+                    // }        
+                }).fail(function(err){
+                    alert('发生错误');
+                }) 
+            }
+            
+        });
+     </script>
+</div>
+{% endblock %}

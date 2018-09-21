@@ -1,0 +1,16 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+
+<div class="postlist">
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action flex-column align-items-start"></a>
+            <h3 class="title text-center">{{post.title}}</h3>            
+            <hr/>
+            <p class="time">会议时间：{{post.meetingTime}}</p>
+            <p class="content">简介：{{post.intro}}</p>
+            <p class="content">内容：{{post.content}}</p>
+            <p class="location">地点：{{post.province}}-{{post.city}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

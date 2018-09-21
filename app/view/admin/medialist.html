@@ -1,0 +1,133 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<!-- Modal -->
+<div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">提示</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          确认删除此条数据？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="deleteComfirm" class="btn btn-primary">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="formbox">
+    <div class='searchbox'>
+        <div class="row">
+            <div class="col-xs-4">
+                <label for="province">省份:</label>
+                <input type="text" name="province" id="province" />
+            </div>
+            <div class="col-xs-4">
+                    <label for="city">城市:</label>
+                    <input type="text" name="city" id="city" />
+                </div>
+            <div class="col-xs-4">
+                <label for="department">学科:</label>
+                <input type="text" name="department" id="department" />
+            </div>
+            <div class="col-xs-4">
+                <label for="year">年份:</label>
+                <input type="text" name="year" id="year" />
+            </div>
+            <div class="col-xs-4">
+                <label for="contentkewords">视频内容关键字:</label>
+                <input type="text" name="contentkewords" id="contentkewords" />
+            </div>    
+            <div class="col-xs-4">
+                <label for="author">主讲人:</label>
+                <input type="text" name="author" id="author" />
+            </div> 
+        </div>
+        
+        <div class="row"></div>
+            <div class="col-xs-12">
+                <span class='btn searchbtn'>查询</span>
+                <span class='btn resetbtn'>重置</span>
+                <a href="/admin/addmedia"><span class='btn addbtn'>新增</span></a>
+            </div>  
+        </div>    
+    </div>   
+    <div class='formbody'>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">标题</th>
+                <th scope="col">学科</th>
+                <th scope="col">简介</th>
+                <th scope="col">主讲人</th>
+                <th scope="col">省份</th>
+                <th scope="col">城市</th>
+                <th scope="col">发布时间</th>
+                <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for media in media %}
+                <tr class="datarow">
+                    <td>{{media.title}}</td>
+                    <td>{{media.department}}</td>
+                    <td>{{media.intro}}</td>
+                    <td>{{media.author}}</td>
+                    <td>{{media.province}}</td>
+                    <td>{{media.city}}</td>
+                    <td>{{media.postTime}}</td>
+                    <td>
+                        <a href="/admin/media?id={{media.id}}"><span class="detail" dataid={{media.id}}>查看</span></a>
+                        <a href="/admin/editmedia?id={{media.id}}"><span class="edit" dataid={{media.id}}>编辑</span></a>
+                        <a><span class="delete" id='deleteBtn' onclick="getid(this)" data-toggle="modal" data-target="#dialog" dataid={{media.id}}>删除</span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>  
+</div>
+<script>
+    var deleteId = '';
+    function getid(obj){
+        deleteId = $(obj).attr('dataid');
+    }
+    $('#deleteComfirm').click(function(){
+        $('#dialog').modal('hide');
+        var id = deleteId;
+        var data = {
+            id:id
+        }
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+            },
+            url:'deletemedia',
+            method:'post',
+            datatype: 'json',
+            // contentType:'application/x-www-form-urlencoded',
+            data : JSON.stringify(data),
+            contentType: 'application/json',
+            processData: false,
+        }).done(function(res){
+            var data = res.message;
+            // if(data.length>0){
+                alert(data);
+                window.location.reload(true);
+                // window.location.pathname ='admin/index';
+                // displayPost(data);
+            // }        
+        }).fail(function(err){
+            alert('发生错误');
+        }) 
+    });
+ </script>
+{% endblock %}

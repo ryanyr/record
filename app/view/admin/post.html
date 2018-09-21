@@ -1,0 +1,18 @@
+{% extends "adtemplate.html" %} 
+{% block content %}
+<p class='menutitle'>{{title}}</p>
+<div class="formbox">
+    <div class='postContent'>
+        <h5>{{post.title}}</h5>
+        <p><span class="fc-blue">会议时间</span>：{{post.meetingTime}}</p>
+        <p><span class="fc-blue">会议地点</span>：{{post.province}}-{{post.city}}</p>
+        <p><span class="fc-blue">科室</span>：{{post.department}}</p>
+        <p><span class="fc-blue">与会人员</span>：{{post.participant_id}}</p>
+        <p><span class="fc-blue">会议简介</span>：{{post.intro}}</p>
+        <p><span class="fc-blue">会议详情</span>：{{post.content}}</p>
+        <p><span class="fc-blue">发布</span>：{{post.author}}</p>
+        <br/>
+        <p><a href="/admin/editpost?id={{post.id}}"><span class="editbtn">编辑</span></a></p>
+    </div>
+</div>
+{% endblock %}

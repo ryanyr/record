@@ -1,0 +1,77 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+
+<div class="search">
+    <div class="input-group">
+        <input type="text" id="searchKeywords" class="form-control" placeholder="输入关键字">
+        <div class="input-group-append">
+            <button id='searchBtn' class="btn btn-outline-secondary" type="button" onclick="searchByKeywords()">搜索</button>
+        </div>
+    </div>
+</div>
+<div class="postlist">
+    <div class="list-group">
+        {% for doctor in doctors %}
+        <a href="/doctorinfo?id={{doctor.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+            <p class="title">{{doctor.name}}</p>            
+            </div>
+            <p class="avatar"><img src="{{doctor.avatar}}" alt=""></p>                 
+            <p class="location">所属单位：{{doctor.company}}-{{doctor.department}}</p>
+            <p class="location">联系方式：{{doctor.telephone}}</p>
+            <p class="content">专家介绍：{{doctor.intro}}</p>
+        </a>
+        {% endfor%}
+    </div>
+</div>
+<script>
+        function searchByKeywords(){
+        var keyword = $('#searchKeywords').val();
+        $.ajax({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader('x-csrf-token', csrftoken);
+                }
+              },
+            url:'/getDoctorByKeywords',
+            method:'get',
+            // datatype: 'json',
+            data : 'keyword=' + keyword,
+            contentType: false,
+            processData: false,
+        }).done(function(data){
+            var data = data.doctors;
+            // if(data.length>0){
+                console.log(1);
+                console.log(data);
+                displayDoctors(data);
+            // }        
+        }).fail(function(data){
+            console.log(err);
+            alert('error');
+        }) 
+    }
+    
+    function displayDoctors(data){
+        $('.list-group').empty();
+        var post = '';
+        if(data.length>0){
+            for(var i=0;i<data.length;i++){
+                var item = '<a href="/doctorinfo?id='+ data[i].id +'" class="list-group-item list-group-item-action flex-column align-items-start">'+
+                                '<div class="d-flex w-100 justify-content-between">'+
+                                '<p class="title">'+ data[i].name +'</p>'+            
+                                '</div>'+
+                                '<p class="avatar"><img src="' + data[i].avatar + '" alt=""></p>' +
+                                '<p class="location">所属单位：' + data[i].company +'-' + data[i].department +'</p>'+
+                                '<p class="content">联系方式：' + data[i].telephone + '</p>' +  
+                                '<p class="content">专家介绍：' + data[i].intro + '</p>' +                            
+                            '</a>';
+                post +=item;
+            }
+        }else{
+            post = '<div class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between">暂无数据</div></div>';
+        }
+        
+        $('.list-group').html(post);
+    }
+    </script>
+{% endblock%}

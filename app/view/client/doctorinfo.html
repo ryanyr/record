@@ -1,0 +1,17 @@
+{% extends "template.html"%} {% block content %} {% include "../navtop.html"%}
+
+<div class="postlist">
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action flex-column align-items-start"></a>
+            <div class="d-flex w-100 justify-content-between">
+                <p class="title">{{doctor.name}}</p>            
+            </div>
+            <p class="avatar"><img src="{{doctor.avatar}}" alt=""></p>                 
+            <p class="location">所属单位：{{doctor.company}}-{{doctor.department}}</p>
+            <p class="location">联系方式：{{doctor.telephone}}</p>
+            <p class="content">专家介绍：{{doctor.intro}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
