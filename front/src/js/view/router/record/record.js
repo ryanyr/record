@@ -121,7 +121,7 @@ export default React.createClass({
         }    
         return (
             <div className="home record">
-                <Header/>
+                <Header title='上传录音'/>
                 <div className="row hint">
                     <div className="col-3">
                         <img src='images/1.jpg'/>

@@ -76,17 +76,14 @@ export default React.createClass({
         }         
         return (
             <div className="home">
-                <Header/>
+                <Header title='首页' back='' menu='1'/>
                 <Namecard/>
                 <div className="content">
                     <img src="images/3.jpg"/>
                     <p>【早安心语】今天是7月31日 ，星期二，农历六月十九，这是多么美好的一天啊，充满着耐心与希望。生活中，很多时候都需要我们有耐心，耐心做人，耐心做事，更要耐心生活。我们也必须先学会承受，再学会参与。承受需要阅历和沉实，参与需要勇气和激情。生活就是在热情与平淡中慢慢磨合的，无论会遇到多少苦涩，我们最终还是会珍爱生活，珍惜每一个新的清晨，并对未来的日子充满信心和希冀。早安，今天的你。</p>
                     <div className="row funcmenu">
-                        <div className="col-6 text-left">
-                        领取早安图
-                        </div>
-                        <div className="col-6 text-right">
-                        <Link to='/record'>我要录制语音</Link>
+                        <div className="col-12 text-center">
+                            <Link to='/record'>我要录制语音</Link>
                         </div>
                     </div>
                     <div className="tip">                        
@@ -101,7 +98,7 @@ export default React.createClass({
                         播放选择
                     </div>
                     <div className="col-6">
-                        排行榜
+                        <Link to='/rank'>排行榜</Link>
                     </div>
                 </div>
             </div>
